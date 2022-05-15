@@ -92,7 +92,9 @@ public enum ANSICodes {
 	}
 	
 	/**
-	 * Returns the code number of the given code. Does not give you the useful string, used for formatting.
+	 * Returns the code number of the given code. Does not give you the useful string, used for
+	 * formatting.
+	 * 
 	 * @return The code number of the specified code.
 	 * @see ANSICodes#getCode()
 	 */
