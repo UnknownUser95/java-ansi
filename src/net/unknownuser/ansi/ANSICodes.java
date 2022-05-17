@@ -76,9 +76,29 @@ public enum ANSICodes {
 	STYLE_OVERLINE("\u001B[53m");
 	
 	private final String code;
+	private static boolean enabled = true;
 	
 	private ANSICodes(String code) {
 		this.code = code;
+	}
+	
+	/**
+	 * Activates or deactives the ANSI formatting. All methods will return an empty string if the
+	 * methods are disabled. Does not affect {@link #getCodeNumber()}.
+	 *  
+	 * @param set The new state of the formatter and creators.
+	 */
+	public static void setEnabled(boolean set) {
+		enabled = set;
+	}
+	
+	/**
+	 * Returns whether the methods are activated.
+	 *  
+	 * @return The current state of the methods.
+	 */
+	public static boolean isEnabled() {
+		return enabled;
 	}
 	
 	/**
@@ -88,11 +108,15 @@ public enum ANSICodes {
 	 * @return The Unicode character for the given format.
 	 */
 	public String getCode() {
-		return this.code;
+		if(enabled) {
+			return this.code;
+		} else {
+			return "";
+		}
 	}
 	
 	/**
-	 * Returns the code number of the given code. Does not give you the useful string, used for
+	 * Returns the code number of the given code. Does not give you the escape sequence, used for
 	 * formatting.
 	 * 
 	 * @return The code number of the specified code.
@@ -110,10 +134,18 @@ public enum ANSICodes {
 	 * @return The ANSI formatted string.
 	 */
 	public static String colourString(String text, ANSICodes style) {
-		return style.getCode() + text + ANSICodes.ALL_RESET;
+		if(enabled) {
+			return style.getCode() + text + ANSICodes.ALL_RESET;
+		} else {
+			return "";
+		}
 	}
 	
 	public static String multiModeString(String text, ANSICodes... codes) {
+		if(!enabled) {
+			return text;
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append("\u001B[");
 		
@@ -147,7 +179,7 @@ public enum ANSICodes {
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
 	 */
 	public static String get24BitForegroundColour(int r, int g, int b) {
-		if(!is8Bit(r) || !is8Bit(g) || !is8Bit(b)) {
+		if(!enabled || !is8Bit(r) || !is8Bit(g) || !is8Bit(b)) {
 			return "";
 		}
 		
@@ -164,7 +196,7 @@ public enum ANSICodes {
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
 	 */
 	public static String get24BitBackgroundColour(int r, int g, int b) {
-		if(!is8Bit(r) || !is8Bit(g) || !is8Bit(b)) {
+		if(!enabled || !is8Bit(r) || !is8Bit(g) || !is8Bit(b)) {
 			return "";
 		}
 		
@@ -186,7 +218,7 @@ public enum ANSICodes {
 	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each id</a>
 	 */
 	public static String get8BitForegroundColour(int id) {
-		if(!is8Bit(id)) {
+		if(!enabled || !is8Bit(id)) {
 			return "";
 		}
 		
@@ -209,7 +241,7 @@ public enum ANSICodes {
 	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each id</a>
 	 */
 	public static String get8BitBackgroundColour(int id) {
-		if(!is8Bit(id)) {
+		if(!enabled || !is8Bit(id)) {
 			return "";
 		}
 		
