@@ -1,6 +1,6 @@
 # ANSI codes for Java
 
-This is an enum for quick access to ANSI codes. It also has a method for quickly formatting a string to a given style.
+This is an enum for quick access to ANSI codes. It also has multiple methods for quickly formatting a string to or creating an escape code for a given style.
 
 ## Notice
 
