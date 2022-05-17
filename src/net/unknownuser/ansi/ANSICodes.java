@@ -112,4 +112,109 @@ public enum ANSICodes {
 	public static String colourString(String text, ANSICodes style) {
 		return style.getCode() + text + ANSICodes.ALL_RESET;
 	}
+	
+	public static String multiModeString(String text, ANSICodes... codes) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\u001B[");
+		
+		for(ANSICodes code : codes) {
+			sb.append(code.getCodeNumber() + ";");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		
+		sb.append("m" + text + ALL_RESET);
+		
+		return sb.toString();
+	}
+	
+	/**
+	 * Tests whether a given integer is 8 bit compatible (between 0 and 255, inclusive).
+	 * 
+	 * @param i The integer to test
+	 * @return {@code true} if the integer in in range of an 8 bit integer, {@code false} otherwise.
+	 */
+	private static boolean is8Bit(int i) {
+		return i >= 0 && i <= 255;
+	}
+	
+	/**
+	 * Formats an escape sequence to display a custom 24 bit foreground colour. Essentially a standard
+	 * RGB colour.
+	 * 
+	 * @param r The red intensity
+	 * @param g The green intensity
+	 * @param b The blue intensity
+	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
+	 */
+	public static String get24BitForegroundColour(int r, int g, int b) {
+		if(!is8Bit(r) || !is8Bit(g) || !is8Bit(b)) {
+			return "";
+		}
+		
+		return String.format("\u001B[38;2;%d;%d;%dm", r, g, b);
+	}
+	
+	/**
+	 * Formats an escape sequence to display a custom 24 bit background colour. Essentially a standard
+	 * RGB colour.
+	 * 
+	 * @param r The red intensity
+	 * @param g The green intensity
+	 * @param b The blue intensity
+	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
+	 */
+	public static String get24BitBackgroundColour(int r, int g, int b) {
+		if(!is8Bit(r) || !is8Bit(g) || !is8Bit(b)) {
+			return "";
+		}
+		
+		return String.format("\u001B[48;2;%d;%d;%dm", r, g, b);
+	}
+	
+	/**
+	 * Returns an escape sequence for the given colour on the standard ANSI colour table.<br>
+	 * The codes are:
+	 * 
+	 * <pre>
+	 *   0 -   7: standard colours
+	 *   8 -  15: high intensity or bright colours
+	 *  16 - 231: colours on a 6x6x6 colour cube
+	 * 232 - 255: grey colours, smaller number means darker grey</pre>
+	 * 
+	 * @param id The pre defined colour number
+	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
+	 */
+	public static String get8BitForegroundColour(int id) {
+		if(!is8Bit(id)) {
+			return "";
+		}
+		
+		return String.format("\u001B[38;5;%dm", id);
+	}
+	
+	/**
+	 * Returns an escape sequence for the given colour on the standard ANSI colour table.<br>
+	 * The codes are:
+	 * 
+	 * <pre>
+	 *   0 -   7: standard colours
+	 *   8 -  15: high intensity or bright colours
+	 *  16 - 231: colours on a 6x6x6 colour cube
+	 * 232 - 255: grey colours, smaller number means darker grey</pre>
+	 * 
+	 * @param id The pre defined colour number
+	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
+	 */
+	public static String get8BitBackgroundColour(int id) {
+		if(!is8Bit(id)) {
+			return "";
+		}
+		
+		return String.format("\u001B[48;5;%dm", id);
+	}
+	
+	@Override
+	public String toString() {
+		return getCode();
+	}
 }
