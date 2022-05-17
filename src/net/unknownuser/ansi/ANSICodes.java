@@ -183,6 +183,7 @@ public enum ANSICodes {
 	 * 
 	 * @param id The pre defined colour number
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
+	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each id</a>
 	 */
 	public static String get8BitForegroundColour(int id) {
 		if(!is8Bit(id)) {
@@ -200,10 +201,12 @@ public enum ANSICodes {
 	 *   0 -   7: standard colours
 	 *   8 -  15: high intensity or bright colours
 	 *  16 - 231: colours on a 6x6x6 colour cube
-	 * 232 - 255: grey colours, smaller number means darker grey</pre>
+	 * 232 - 255: grey colours, smaller number means darker grey
+	 * </pre>
 	 * 
 	 * @param id The pre defined colour number
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
+	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each id</a>
 	 */
 	public static String get8BitBackgroundColour(int id) {
 		if(!is8Bit(id)) {
