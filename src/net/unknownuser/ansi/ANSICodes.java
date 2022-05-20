@@ -3,9 +3,6 @@ package net.unknownuser.ansi;
 public enum ANSICodes {
 	// https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 	
-	// simply no style at all
-	NONE(0),
-	
 	// resets all attributes
 	ALL_RESET(0),
 	
