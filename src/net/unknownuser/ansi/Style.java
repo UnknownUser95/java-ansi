@@ -4,7 +4,6 @@ package net.unknownuser.ansi;
  * Various styles for printing in a console.
  */
 public class Style extends Default {
-	
 	private Style(int code) {
 		super(code);
 	}

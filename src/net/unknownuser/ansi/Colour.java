@@ -4,7 +4,6 @@ package net.unknownuser.ansi;
  * Various colours for printing in a console.
  */
 public class Colour extends Default {
-	
 	protected Colour(int code) {
 		super(code);
 	}
