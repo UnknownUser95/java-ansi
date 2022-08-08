@@ -3,8 +3,7 @@ package net.unknownuser.ansi;
 /**
  * Various codes for manipulating the cursor or already printed lines.<br>
  * Unlike the other implementations, this class' codeNumber is a char, as all codes don't use
- * numbers, but character to represent them.<br>
- * <b>The implementation of each code is 
+ * numbers, but character to represent them.
  */
 public class Cursor extends Default {
 	private Cursor(int code) {
@@ -23,7 +22,7 @@ public class Cursor extends Default {
 	public static final Cursor CURSOR_HORIZONTAL_ABSOLUTE = new Cursor('G');
 	/**
 	 * For {@link Cursor#multiEffect(int) multiEffect}:<br>
-	 * 0: clear from cursor to end of screen<br>
+	 * 0: clear from cursor to end of screen (default)<br>
 	 * 1: clear from cursor to beginning of screen<br>
 	 * 2: clear entire screen<br>
 	 * 3: clear entire screen and clear scroll buffer
@@ -31,18 +30,18 @@ public class Cursor extends Default {
 	public static final Cursor ERASE_IN_DISPLAY = new Cursor('J');
 	/**
 	 * For {@link Cursor#multiEffect(int) multiEffect}:<br>
-	 * 0: clear from cursor to end of line<br>
+	 * 0: clear from cursor to end of line (default)<br>
 	 * 1: clear form cursor to beginning of line<br>
 	 * 2: clear line<br>
 	 * does not change cursor position
 	 */
 	public static final Cursor ERASE_LINE = new Cursor('K');
 	/**
-	 * scolls up by 1, adds new lines at bottom
+	 * scolls up by 1, <b>adds new lines at bottom</b>
 	 */
 	public static final Cursor SCROLL_UP = new Cursor('S');
 	/**
-	 * scolls down by 1, adds new lines at top
+	 * scolls down by 1, <b>adds new lines at top</b>
 	 */
 	public static final Cursor SCROLL_DOWN = new Cursor('T');
 	
@@ -124,7 +123,7 @@ public class Cursor extends Default {
 	 * @return The code to hide the cursor.
 	 */
 	public static String hideCursor() {
-		return ESCAPE_CODE_DEFAULT + "?25hl";
+		return ESCAPE_CODE_DEFAULT + "?25l";
 	}
 	
 	/**
