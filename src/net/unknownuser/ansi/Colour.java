@@ -3,48 +3,64 @@ package net.unknownuser.ansi;
 /**
  * Various colours for printing in a console.
  */
-public class Colour extends Default {
+public abstract class Colour extends Default {
 	protected Colour(int code) {
 		super(code);
 	}
 	
-	// all foreground colours
-	public static final Colour FOREGROUND_BLACK = new Colour(30);
-	public static final Colour FOREGROUND_RED = new Colour(31);
-	public static final Colour FOREGROUND_GREEN = new Colour(32);
-	public static final Colour FOREGROUND_YELLOW = new Colour(33);
-	public static final Colour FOREGROUND_BLUE = new Colour(34);
-	public static final Colour FOREGROUND_PURPLE = new Colour(35);
-	public static final Colour FOREGROUND_CYAN = new Colour(36);
-	public static final Colour FOREGROUND_WHITE = new Colour(37);
+	/**
+	 * All foreground colours
+	 */
+	public static class Foreground extends Colour {
+		protected Foreground(int code) {
+			super(code);
+		}
+		
+		public static final Colour BLACK = new Foreground(30);
+		public static final Colour RED = new Foreground(31);
+		public static final Colour GREEN = new Foreground(32);
+		public static final Colour YELLOW = new Foreground(33);
+		public static final Colour BLUE = new Foreground(34);
+		public static final Colour PURPLE = new Foreground(35);
+		public static final Colour CYAN = new Foreground(36);
+		public static final Colour WHITE = new Foreground(37);
+		
+		public static final Colour BRIGHT_BLACK = new Foreground(90);
+		public static final Colour BRIGHT_RED = new Foreground(91);
+		public static final Colour BRIGHT_GREEN = new Foreground(92);
+		public static final Colour BRIGHT_YELLOW = new Foreground(93);
+		public static final Colour BRIGHT_BLUE = new Foreground(94);
+		public static final Colour BRIGHT_PURPLE = new Foreground(95);
+		public static final Colour BRIGHT_CYAN = new Foreground(96);
+		public static final Colour BRIGHT_WHITE = new Foreground(97);
+	}
 	
-	public static final Colour FOREGROUND_BRIGHT_BLACK = new Colour(90);
-	public static final Colour FOREGROUND_BRIGHT_RED = new Colour(91);
-	public static final Colour FOREGROUND_BRIGHT_GREEN = new Colour(92);
-	public static final Colour FOREGROUND_BRIGHT_YELLOW = new Colour(93);
-	public static final Colour FOREGROUND_BRIGHT_BLUE = new Colour(94);
-	public static final Colour FOREGROUND_BRIGHT_PURPLE = new Colour(95);
-	public static final Colour FOREGROUND_BRIGHT_CYAN = new Colour(96);
-	public static final Colour FOREGROUND_BRIGHT_WHITE = new Colour(97);
-	
-	// all background colours
-	public static final Colour BACKROUND_BLACK = new Colour(40);
-	public static final Colour BACKROUND_RED = new Colour(41);
-	public static final Colour BACKROUND_GREEN = new Colour(42);
-	public static final Colour BACKROUND_YELLOW = new Colour(43);
-	public static final Colour BACKROUND_BLUE = new Colour(44);
-	public static final Colour BACKROUND_PURPLE = new Colour(45);
-	public static final Colour BACKROUND_CYAN = new Colour(46);
-	public static final Colour BACKROUND_WHITE = new Colour(47);
-	
-	public static final Colour BACKROUND_BRIGHT_BLACK = new Colour(100);
-	public static final Colour BACKROUND_BRIGHT_RED = new Colour(101);
-	public static final Colour BACKROUND_BRIGHT_GREEN = new Colour(102);
-	public static final Colour BACKROUND_BRIGHT_YELLOW = new Colour(103);
-	public static final Colour BACKROUND_BRIGHT_BLUE = new Colour(104);
-	public static final Colour BACKROUND_BRIGHT_PURPLE = new Colour(105);
-	public static final Colour BACKROUND_BRIGHT_CYAN = new Colour(106);
-	public static final Colour BACKROUND_BRIGHT_WHITE = new Colour(107);
+	/**
+	 * All background colours
+	 */
+	public static class Background extends Colour {
+		protected Background(int code) {
+			super(code);
+		}
+		
+		public static final Colour BLACK = new Background(40);
+		public static final Colour RED = new Background(41);
+		public static final Colour GREEN = new Background(42);
+		public static final Colour YELLOW = new Background(43);
+		public static final Colour BLUE = new Background(44);
+		public static final Colour PURPLE = new Background(45);
+		public static final Colour CYAN = new Background(46);
+		public static final Colour WHITE = new Background(47);
+		
+		public static final Colour BRIGHT_BLACK = new Background(100);
+		public static final Colour BRIGHT_RED = new Background(101);
+		public static final Colour BRIGHT_GREEN = new Background(102);
+		public static final Colour BRIGHT_YELLOW = new Background(103);
+		public static final Colour BRIGHT_BLUE = new Background(104);
+		public static final Colour BRIGHT_PURPLE = new Background(105);
+		public static final Colour BRIGHT_CYAN = new Background(106);
+		public static final Colour BRIGHT_WHITE = new Background(107);
+	}
 	
 	/**
 	 * Converts a string to a ANSI formatted string with the given style.
@@ -58,12 +74,12 @@ public class Colour extends Default {
 	}
 	
 	/**
-	 * Formats an escape sequence to display a custom 24 bit colour. Essentially a standard
-	 * RGB colour.
+	 * Formats an escape sequence to display a custom 24 bit colour. Essentially a standard RGB
+	 * colour.
 	 * 
-	 * @param r The red intensity
-	 * @param g The green intensity
-	 * @param b The blue intensity
+	 * @param r            The red intensity
+	 * @param g            The green intensity
+	 * @param b            The blue intensity
 	 * @param isBackground Whether the colour should be for the background
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
 	 */
@@ -72,7 +88,7 @@ public class Colour extends Default {
 			return "";
 		}
 		
-		return String.format("\u001B[%d;2;%d;%d;%dm",(isBackground ? 48 : 38) , r, g, b);
+		return String.format("\u001B[%d;2;%d;%d;%dm", (isBackground ? 48 : 38), r, g, b);
 	}
 	
 	/**
@@ -96,12 +112,14 @@ public class Colour extends Default {
 	 *   0 -   7: standard colours
 	 *   8 -  15: high intensity or bright colours
 	 *  16 - 231: colours on a 6x6x6 colour cube
-	 * 232 - 255: grey colours, smaller number means darker grey</pre>
+	 * 232 - 255: grey colours, smaller number means darker grey
+	 * </pre>
 	 * 
-	 * @param id The pre defined colour number
+	 * @param id           The pre defined colour number
 	 * @param isBackground Whether the colour should be for the background
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
-	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each id</a>
+	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each
+	 *      id</a>
 	 */
 	public static String get8BitColour(int id, boolean isBackgorund) {
 		if(!is8Bit(id)) {
@@ -119,11 +137,13 @@ public class Colour extends Default {
 	 *   0 -   7: standard colours
 	 *   8 -  15: high intensity or bright colours
 	 *  16 - 231: colours on a 6x6x6 colour cube
-	 * 232 - 255: grey colours, smaller number means darker grey</pre>
+	 * 232 - 255: grey colours, smaller number means darker grey
+	 * </pre>
 	 * 
 	 * @param id The pre defined colour number
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
-	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each id</a>
+	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each
+	 *      id</a>
 	 */
 	public static String get8BitColour(int id) {
 		return get8BitColour(id, false);
