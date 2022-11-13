@@ -85,6 +85,16 @@ public class Cursor extends Default {
 	}
 	
 	/**
+	* Sets the cursor position to row 0 and column 0.<br>
+	* Same as {@link #setCursorPosition(int, int) setCursorPosition} to 0,0.
+	*
+	* @return The code, which sets the cursor to 0,0.
+	*/
+	public static String setCursorToStart() {
+		return ESCAPE_CODE_DEFAULT + "H";
+	}
+	
+	/**
 	 * Sets the cursor position to the specified row and column. The position starts at the top
 	 * left.<br>
 	 * Unlike {@link Cursor#setCursorPosition(int, int) setCursorPosition} this code is interpreted as
