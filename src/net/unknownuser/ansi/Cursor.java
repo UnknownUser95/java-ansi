@@ -2,8 +2,7 @@ package net.unknownuser.ansi;
 
 /**
  * Various codes for manipulating the cursor or already printed lines.<br>
- * Unlike the other implementations, this class' codeNumber is a char, as all codes don't use
- * numbers, but character to represent them.
+ * Unlike the other implementations, this class' codeNumber is a char, as all codes don't use numbers, but character to represent them.
  */
 public class Cursor extends Default {
 	private Cursor(int code) {
@@ -19,7 +18,7 @@ public class Cursor extends Default {
 	/**
 	 * Moves the cursor to column 1
 	 */
-	public static final Cursor CURSOR_HORIZONTAL_ABSOLUTE = new Cursor('G');
+	public static final Cursor HORIZONTAL_ABSOLUTE = new Cursor('G');
 	/**
 	 * For {@link Cursor#multiEffect(int) multiEffect}:<br>
 	 * 0: clear from cursor to end of screen (default)<br>
@@ -44,6 +43,12 @@ public class Cursor extends Default {
 	 * scolls down by 1, <b>adds new lines at top</b>
 	 */
 	public static final Cursor SCROLL_DOWN = new Cursor('T');
+	/**
+	 * Sets the cursor position to row 0 and column 0.<br>
+	 * Same as {@link #setCursorPosition(int, int) setCursorPosition} to 0,0.<br>
+	 * <b>This does not work with {@link #multiEffect(int, Cursor) multiEffect} (both static and non static version).</b>
+	 */
+	public static final Cursor SET_TO_START = new Cursor('H');
 	
 	@Override
 	public String getCode() {
@@ -54,6 +59,7 @@ public class Cursor extends Default {
 	 * Return a code, which has this code's effect {@code amount} times.
 	 * 
 	 * @param amount The amount of times this code's effect is repeated.
+	 * 
 	 * @return The code, which has the desired effect {@code amount} of times.
 	 */
 	public String multiEffect(int amount) {
@@ -61,12 +67,11 @@ public class Cursor extends Default {
 	}
 	
 	/**
-	 * All codes support the multiplication of their respective effect, e.g. instead of printing
-	 * {@link Cursor#UP UP} multiple times, it is possible to print "move cursor up 5 lines" with the
-	 * same effect.
+	 * All codes support the multiplication of their respective effect, e.g. instead of printing {@link Cursor#UP UP} multiple times, it is possible to print "move cursor up 5 lines" with the same effect.
 	 * 
 	 * @param amount The amount of times the code's effect is repeated.
 	 * @param code   The code to be repeated.
+	 * 
 	 * @return The code, which has the desired effect {@code amount} of times.
 	 */
 	public static String multiEffect(int amount, Cursor code) {
@@ -78,6 +83,7 @@ public class Cursor extends Default {
 	 * 
 	 * @param row    The row of the new cursor position.
 	 * @param column The column of the new cursor position.
+	 * 
 	 * @return The code to set the cursor to the specified one.
 	 */
 	public static String setCursorPosition(int row, int column) {
@@ -85,23 +91,12 @@ public class Cursor extends Default {
 	}
 	
 	/**
-	* Sets the cursor position to row 0 and column 0.<br>
-	* Same as {@link #setCursorPosition(int, int) setCursorPosition} to 0,0.
-	*
-	* @return The code, which sets the cursor to 0,0.
-	*/
-	public static String setCursorToStart() {
-		return ESCAPE_CODE_DEFAULT + "H";
-	}
-	
-	/**
-	 * Sets the cursor position to the specified row and column. The position starts at the top
-	 * left.<br>
-	 * Unlike {@link Cursor#setCursorPosition(int, int) setCursorPosition} this code is interpreted as
-	 * a format effector (like CR or LF).
+	 * Sets the cursor position to the specified row and column. The position starts at the top left.<br>
+	 * Unlike {@link Cursor#setCursorPosition(int, int) setCursorPosition} this code is interpreted as a format effector (like CR or LF).
 	 * 
 	 * @param row    The row of the new cursor position.
 	 * @param column The column of the new cursor position.
+	 * 
 	 * @return The code to set the cursor to the specified one.
 	 */
 	public static String setCursorPositionFE(int row, int column) {

@@ -9,7 +9,7 @@ public abstract class Colour extends Default {
 	}
 	
 	/**
-	 * All foreground colours
+	 * All standard foreground colours
 	 */
 	public static class Foreground extends Colour {
 		protected Foreground(int code) {
@@ -36,7 +36,7 @@ public abstract class Colour extends Default {
 	}
 	
 	/**
-	 * All background colours
+	 * All standard background colours
 	 */
 	public static class Background extends Colour {
 		protected Background(int code) {
@@ -67,6 +67,7 @@ public abstract class Colour extends Default {
 	 * 
 	 * @param text  The text, which should be formatted.
 	 * @param style The style of the text.
+	 * 
 	 * @return The ANSI formatted string.
 	 */
 	public static String colourString(String text, Colour style) {
@@ -74,13 +75,13 @@ public abstract class Colour extends Default {
 	}
 	
 	/**
-	 * Formats an escape sequence to display a custom 24 bit colour. Essentially a standard RGB
-	 * colour.
+	 * Formats an escape sequence to display a custom 24 bit colour. Essentially a standard RGB colour.
 	 * 
 	 * @param r            The red intensity
 	 * @param g            The green intensity
 	 * @param b            The blue intensity
 	 * @param isBackground Whether the colour should be for the background
+	 * 
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
 	 */
 	public static String get24BitColour(int r, int g, int b, boolean isBackground) {
@@ -92,12 +93,12 @@ public abstract class Colour extends Default {
 	}
 	
 	/**
-	 * Formats an escape sequence to display a custom 24 bit foreground colour. Essentially a standard
-	 * RGB colour.
+	 * Formats an escape sequence to display a custom 24 bit foreground colour. Essentially a standard RGB colour.
 	 * 
 	 * @param r The red intensity
 	 * @param g The green intensity
 	 * @param b The blue intensity
+	 * 
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
 	 */
 	public static String get24BitColour(int r, int g, int b) {
@@ -106,6 +107,7 @@ public abstract class Colour extends Default {
 	
 	/**
 	 * Returns an escape sequence for the given colour on the standard ANSI colour table.<br>
+	 * Also known as indexed colours.<br>
 	 * The codes are:
 	 * 
 	 * <pre>
@@ -117,9 +119,10 @@ public abstract class Colour extends Default {
 	 * 
 	 * @param id           The pre defined colour number
 	 * @param isBackground Whether the colour should be for the background
+	 * 
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
-	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each
-	 *      id</a>
+	 * 
+	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each id</a>
 	 */
 	public static String get8BitColour(int id, boolean isBackgorund) {
 		if(!is8Bit(id)) {
@@ -131,6 +134,8 @@ public abstract class Colour extends Default {
 	
 	/**
 	 * Returns an escape sequence for the given colour on the standard ANSI colour table.<br>
+	 * The code will be for foreground colours only. Use {@link #get8BitColour(int, boolean) get8BitColour} for background colours.<br>
+	 * Also known as indexed colours.<br>
 	 * The codes are:
 	 * 
 	 * <pre>
@@ -141,9 +146,10 @@ public abstract class Colour extends Default {
 	 * </pre>
 	 * 
 	 * @param id The pre defined colour number
+	 * 
 	 * @return The ANSI sequence for the given colour. An empty string if any number is invalid.
-	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each
-	 *      id</a>
+	 * 
+	 * @see <a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit">The colour codes for each id</a>
 	 */
 	public static String get8BitColour(int id) {
 		return get8BitColour(id, false);

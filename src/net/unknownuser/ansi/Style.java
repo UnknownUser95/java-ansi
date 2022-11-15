@@ -7,7 +7,7 @@ public class Style extends Default {
 	private Style(int code) {
 		super(code);
 	}
-
+	
 	public static final Style BOLD = new Style(1);
 	public static final Style ITALIC = new Style(3);
 	public static final Style UNDERLINE = new Style(4);

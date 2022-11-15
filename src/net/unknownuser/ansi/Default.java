@@ -49,6 +49,7 @@ public class Default {
 	 * All {@link Cursor Cursor} codes will be ignored.
 	 * 
 	 * @param codes
+	 * 
 	 * @return The escape sequence for all of the styles combined.
 	 */
 	public static String multiStyle(Default... codes) {
